@@ -36,3 +36,12 @@ relations:
   - ["hadoop-resourcemanager:nodemanager", "hadoop-slave:resourcemanager"]
   - ["hadoop-namenode:namenode", "hadoop-plugin:namenode"]
   - ["hadoop-namenode:namenode", "hadoop-resourcemanager:namenode"]
+machines:
+  "0":
+    series: xenial
+  "1":
+    series: xenial
+  "2":
+    series: xenial
+  "3":
+    series: xenial

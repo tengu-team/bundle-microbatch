@@ -1,6 +1,19 @@
 {
 	"series": "xenial",
-	"applications": {
+	"machines": {
+	  "0": {
+	    "series": "xenial"
+		},
+	  "1": {
+	    "series": "xenial"
+		},
+		"2": {
+	    "series": "xenial"
+		},
+		"3": {
+	    "series": "xenial"
+		}
+	},"applications": {
 		"hadoop-namenode": {
 			"charm": "cs:xenial/hadoop-namenode-6",
 			"num_units": 1,
