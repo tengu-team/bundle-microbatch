@@ -4,7 +4,7 @@
 		"hadoop-namenode": {
 			"charm": "cs:xenial/hadoop-namenode-6",
 			"num_units": 1,
-			"to": null
+			"to": "0"
 		},
 		"hadoop-slave": {
 			"charm": "cs:xenial/hadoop-slave-6",
