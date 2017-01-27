@@ -1,0 +1,38 @@
+series: xenial
+applications:
+  "hadoop-namenode":
+    charm: "cs:xenial/hadoop-namenode-6"
+    num_units: 1
+    to:
+      - "0"
+  "hadoop-slave":
+    charm: "cs:xenial/hadoop-slave-6"
+    num_units: 1
+    to:
+      - "1"
+  "hadoop-plugin":
+    charm: "cs:xenial/hadoop-plugin-6"
+  "hadoop-resourcemanager":
+    charm: "cs:xenial/hadoop-resourcemanager-6"
+    num_units: 1
+    to:
+      - "2"
+  spark:
+    charm: "cs:xenial/spark-15"
+    num_units: 1
+    options:
+      spark_execution_mode: "yarn-client"
+    to:
+      - "3"
+  "jupyter":
+    charm: "cs:~tengu-team/jupyter-notebook-spark-2"
+    options:
+      "pip3-dependencies": "matplotlib pandas findspark"
+relations:
+  - ["hadoop-namenode:datanode", "hadoop-slave:namenode"]
+  - ["spark:client", "jupyter:spark"]
+  - ["hadoop-plugin:hadoop-plugin", "spark:hadoop"]
+  - ["hadoop-resourcemanager:resourcemanager", "hadoop-plugin:resourcemanager"]
+  - ["hadoop-resourcemanager:nodemanager", "hadoop-slave:resourcemanager"]
+  - ["hadoop-namenode:namenode", "hadoop-plugin:namenode"]
+  - ["hadoop-namenode:namenode", "hadoop-resourcemanager:namenode"]
