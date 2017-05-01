@@ -1,56 +1,68 @@
 {
 	"series": "xenial",
-	"machines": {
-	  "0": {
-	    "series": "xenial"
+	"applications": {
+		"hadoop-plugin": {
+			"charm": "cs:hadoop-plugin-14",
+			"annotations": {
+				"gui-x": "428.33782958984375",
+				"gui-y": "400.01385498046875"
+			}
 		},
-	  "1": {
-	    "series": "xenial"
-		},
-		"2": {
-	    "series": "xenial"
-		},
-		"3": {
-	    "series": "xenial"
-		}
-	},"applications": {
-		"hadoop-namenode": {
-			"charm": "cs:xenial/hadoop-namenode-6",
+		"hadoop-resourcemanager": {
+			"charm": "cs:hadoop-resourcemanager-16",
 			"num_units": 1,
-			"to": ["0"]
-		},
-		"hadoop-slave": {
-			"charm": "cs:xenial/hadoop-slave-6",
-			"num_units": 1,
+			"annotations": {
+				"gui-x": "753.2262573242188",
+				"gui-y": "167.38821411132812"
+			},
 			"to": [
 				"1"
 			]
 		},
-		"hadoop-plugin": {
-			"charm": "cs:xenial/hadoop-plugin-6"
-		},
-		"hadoop-resourcemanager": {
-			"charm": "cs:xenial/hadoop-resourcemanager-6",
+		"hadoop-namenode": {
+			"charm": "cs:hadoop-namenode-14",
 			"num_units": 1,
+			"annotations": {
+				"gui-x": "765.8101196289062",
+				"gui-y": "585.8380432128906"
+			},
 			"to": [
-				"2"
+				"1"
+			]
+		},
+		"zeppelin": {
+			"charm": "cs:zeppelin-12",
+			"num_units": 1,
+			"expose": true,
+			"annotations": {
+				"gui-x": "71.4520263671875",
+				"gui-y": "731.4427490234375"
+			},
+			"to": [
+				"1"
 			]
 		},
 		"spark": {
-			"charm": "cs:xenial/spark-15",
+			"charm": "cs:spark-34",
 			"num_units": 1,
 			"options": {
+				"spark_bench_enabled": true,
 				"spark_execution_mode": "yarn-client"
 			},
-			"to": [
-				"3"
-			]
+			"annotations": {
+				"gui-x": "66.15873718261719",
+				"gui-y": "376.79180908203125"
+			},
+			"to": null
 		},
-		"jupyter": {
-			"charm": "cs:~tengu-team/jupyter-notebook-spark-2",
-			"options": {
-				"pip3-dependencies": "matplotlib pandas findspark"
-			}
+		"hadoop-slave": {
+			"charm": "cs:hadoop-slave-15",
+			"num_units": 1,
+			"annotations": {
+				"gui-x": "1179.74853515625",
+				"gui-y": "361.1912841796875"
+			},
+			"to": null
 		}
 	},
 	"relations": [
@@ -59,28 +71,38 @@
 			"hadoop-slave:namenode"
 		],
 		[
-			"spark:client",
-			"jupyter:spark"
+			"hadoop-plugin:namenode",
+			"hadoop-namenode:namenode"
 		],
 		[
-			"hadoop-plugin:hadoop-plugin",
-			"spark:hadoop"
+			"spark:hadoop",
+			"hadoop-plugin:hadoop-plugin"
 		],
 		[
-			"hadoop-resourcemanager:resourcemanager",
-			"hadoop-plugin:resourcemanager"
+			"hadoop-namenode:namenode",
+			"hadoop-resourcemanager:namenode"
+		],
+		[
+			"zeppelin:spark",
+			"spark:client"
 		],
 		[
 			"hadoop-resourcemanager:nodemanager",
 			"hadoop-slave:resourcemanager"
 		],
 		[
-			"hadoop-namenode:namenode",
-			"hadoop-plugin:namenode"
-		],
-		[
-			"hadoop-namenode:namenode",
-			"hadoop-resourcemanager:namenode"
+			"hadoop-plugin:resourcemanager",
+			"hadoop-resourcemanager:resourcemanager"
 		]
-	]
+	],
+	"machines": {
+		"0": {
+			"series": "xenial",
+			"constraints": "arch=amd64 cpu-cores=1 cpu-power=138 mem=1700 root-disk=10240"
+		},
+		"1": {
+			"series": "xenial",
+			"constraints": "arch=amd64 cpu-cores=1 cpu-power=138 mem=1700 root-disk=10240"
+		}
+	}
 }
