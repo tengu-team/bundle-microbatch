@@ -34,8 +34,8 @@ applications:
     charm: "cs:spark-34"
     num_units: 1
     options: 
-      spark_bench_enabled: truetrue
-      spark_execution_mode: "yarn-client\n"
+      spark_bench_enabled: true
+      spark_execution_mode: "yarn-client"
     annotations: 
       "gui-x": "66.15873718261719"
       "gui-y": "376.79180908203125"
