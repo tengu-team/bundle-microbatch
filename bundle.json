@@ -1,6 +1,6 @@
 {
 	"series": "xenial",
-	"applications": {
+	"services": {
 		"hadoop-plugin": {
 			"charm": "cs:hadoop-plugin-14",
 			"annotations": {
