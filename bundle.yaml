@@ -1,60 +1,41 @@
 series: xenial
-applications: 
-  "hadoop-plugin": 
-    charm: "cs:hadoop-plugin-14"
-    annotations: 
-      "gui-x": "428.33782958984375"
-      "gui-y": "400.01385498046875"
-  "hadoop-resourcemanager": 
-    charm: "cs:hadoop-resourcemanager-16"
+applications:
+  "hadoop-plugin":
+    charm: "cs:hadoop-plugin-31"
+  "hadoop-resourcemanager":
+    charm: "cs:hadoop-resourcemanager-33"
     num_units: 1
-    annotations: 
-      "gui-x": "753.2262573242188"
-      "gui-y": "167.38821411132812"
-    to: 
+    to:
       - "1"
-  "hadoop-namenode": 
-    charm: "cs:hadoop-namenode-14"
+  "hadoop-namenode":
+    charm: "cs:hadoop-namenode-31"
     num_units: 1
-    annotations: 
-      "gui-x": "765.8101196289062"
-      "gui-y": "585.8380432128906"
-    to: 
+    to:
       - "1"
-  zeppelin: 
-    charm: "cs:zeppelin-12"
-    num_units: 1
+  zeppelin:
+    charm: "cs:zeppelin-32"
     expose: true
-    annotations: 
-      "gui-x": "71.4520263671875"
-      "gui-y": "731.4427490234375"
-    to: 
-      - "1"
-  spark: 
-    charm: "cs:spark-34"
     num_units: 1
-    options: 
+    to:
+      - "0"
+  spark:
+    charm: "cs:spark-56"
+    num_units: 1
+    options:
       spark_bench_enabled: true
-      spark_execution_mode: "yarn-client"
-    annotations: 
-      "gui-x": "66.15873718261719"
-      "gui-y": "376.79180908203125"
-    to: 
+    to:
       - "0"
-  "hadoop-slave": 
-    charm: "cs:hadoop-slave-15"
+  "hadoop-slave":
+    charm: "cs:hadoop-slave-32"
     num_units: 1
-    annotations: 
-      "gui-x": "1179.74853515625"
-      "gui-y": "361.1912841796875"
-    to: 
+    to:
       - "0"
-relations: 
+relations:
   - - "hadoop-namenode:datanode"
     - "hadoop-slave:namenode"
   - - "hadoop-plugin:namenode"
     - "hadoop-namenode:namenode"
-  - - "spark:hadoop"
+  - - "zeppelin:hadoop"
     - "hadoop-plugin:hadoop-plugin"
   - - "hadoop-namenode:namenode"
     - "hadoop-resourcemanager:namenode"
@@ -64,10 +45,10 @@ relations:
     - "hadoop-slave:resourcemanager"
   - - "hadoop-plugin:resourcemanager"
     - "hadoop-resourcemanager:resourcemanager"
-machines: 
-  "0": 
+machines:
+  "0":
     series: xenial
     constraints: "arch=amd64 cpu-cores=1 cpu-power=138 mem=1700 root-disk=10240"
-  "1": 
+  "1":
     series: xenial
     constraints: "arch=amd64 cpu-cores=1 cpu-power=138 mem=1700 root-disk=10240"
