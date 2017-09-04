@@ -3,7 +3,7 @@
   "machines": {
 		"0": { "series": "xenial" },
 		"1": { "series": "xenial" }
-	}
+  },
   "services": {
 		"hadoop-plugin": {
 			"charm": "cs:hadoop-plugin-31"
