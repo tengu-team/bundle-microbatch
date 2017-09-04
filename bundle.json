@@ -1,31 +1,28 @@
-
 {
-	"series": "xenial",
-	"services": {
+  "series": "xenial",
+  "machines": {
+		"0": { "series": "xenial" },
+		"1": { "series": "xenial" }
+	}
+  "services": {
 		"hadoop-plugin": {
 			"charm": "cs:hadoop-plugin-31"
 		},
 		"hadoop-resourcemanager": {
 			"charm": "cs:hadoop-resourcemanager-33",
 			"num_units": 1,
-			"to": [
-				"1"
-			]
+			"to": ["1"]
 		},
 		"hadoop-namenode": {
 			"charm": "cs:hadoop-namenode-31",
 			"num_units": 1,
-			"to": [
-				"1"
-			]
+			"to": ["1"]
 		},
 		"zeppelin": {
 			"charm": "cs:zeppelin-32",
 			"num_units": 1,
 			"expose": true,
-			"to": [
-				"0"
-			]
+			"to": ["0"]
 		},
 		"spark": {
 			"charm": "cs:spark-56",
@@ -33,57 +30,21 @@
 			"options": {
 				"spark_bench_enabled": true
 			},
-			"to": [
-				"0"
-			]
+			"to": ["0"]
 		},
 		"hadoop-slave": {
 			"charm": "cs:hadoop-slave-32",
 			"num_units": 1,
-			"to": [
-				"0"
-			]
+			"to": ["0"]
 		}
 	},
 	"relations": [
-		[
-			"hadoop-namenode:datanode",
-			"hadoop-slave:namenode"
-		],
-		[
-			"hadoop-plugin:namenode",
-			"hadoop-namenode:namenode"
-		],
-		[
-			"zeppelin:hadoop",
-			"hadoop-plugin:hadoop-plugin"
-		],
-		[
-			"hadoop-namenode:namenode",
-			"hadoop-resourcemanager:namenode"
-		],
-		[
-			"zeppelin:spark",
-			"spark:client"
-		],
-		[
-			"hadoop-resourcemanager:nodemanager",
-			"hadoop-slave:resourcemanager"
-		],
-		[
-			"hadoop-plugin:resourcemanager",
-			"hadoop-resourcemanager:resourcemanager"
-		],
-
-	],
-	"machines": {
-		"0": {
-			"series": "xenial",
-			"constraints": "arch=amd64 cpu-cores=1 cpu-power=138 mem=1700 root-disk=10240"
-		},
-		"1": {
-			"series": "xenial",
-			"constraints": "arch=amd64 cpu-cores=1 cpu-power=138 mem=1700 root-disk=10240"
-		}
-	}
+		["hadoop-namenode:datanode", "hadoop-slave:namenode"],
+		["hadoop-plugin:namenode", "hadoop-namenode:namenode"],
+		["zeppelin:hadoop", "hadoop-plugin:hadoop-plugin"],
+		["hadoop-namenode:namenode", "hadoop-resourcemanager:namenode"],
+		["zeppelin:spark", "spark:client"],
+		["hadoop-resourcemanager:nodemanager", "hadoop-slave:resourcemanager"],
+		["hadoop-plugin:resourcemanager", "hadoop-resourcemanager:resourcemanager"]
+	]
 }
